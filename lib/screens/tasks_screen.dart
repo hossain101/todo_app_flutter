@@ -1,17 +1,27 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:todo_app_flutter/screens/add_task_screen.dart';
 import 'package:todo_app_flutter/widgets/tasks_list.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({Key? key}) : super(key: key);
+
+//this goes inside the builder of the showMOdalBottomSheet if we wanted a named builder
+  // Widget buildBottomSheet(BuildContext context) {
+  //   return Container();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () => {
+          //slide up something where we can add a new task
+          showModalBottomSheet(
+              context: context, builder: (context) => AddTaskScreen())
+        },
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(Icons.add),
       ),
