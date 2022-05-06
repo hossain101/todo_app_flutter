@@ -1,9 +1,17 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
 
-class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({Key? key}) : super(key: key);
+class AddTaskScreen extends StatefulWidget {
+  AddTaskScreen(this.addTaskCallback);
+  late Function addTaskCallback;
+
+  @override
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
+  late String newTaskTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +40,9 @@ class AddTaskScreen extends StatelessWidget {
             TextField(
               autofocus: true,
               textAlign: TextAlign.center,
+              onChanged: (value) {
+                newTaskTitle = value;
+              },
             ),
             SizedBox(
               height: 10,
@@ -39,6 +50,7 @@ class AddTaskScreen extends StatelessWidget {
             FlatButton(
               onPressed: () {
                 //we will be adding the tasks to the list
+                widget.addTaskCallback(newTaskTitle);
               },
               child: Text('Add'),
               color: Colors.lightBlueAccent,

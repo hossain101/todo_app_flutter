@@ -4,14 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:todo_app_flutter/screens/add_task_screen.dart';
 import 'package:todo_app_flutter/widgets/tasks_list.dart';
 
-class TasksScreen extends StatelessWidget {
-  const TasksScreen({Key? key}) : super(key: key);
+import '../models/task.dart';
+
+class TasksScreen extends StatefulWidget {
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [
+    Task(name: 'Finish this application', isDone: false),
+    Task(name: 'Finish Comuputational Intelligence', isDone: false),
+    Task(name: 'Finish Finish software construction', isDone: false),
+    Task(name: 'Finish Realtime software engineering yoo', isDone: false),
+  ];
 
 //this goes inside the builder of the showMOdalBottomSheet if we wanted a named builder
-  // Widget buildBottomSheet(BuildContext context) {
-  //   return Container();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +28,17 @@ class TasksScreen extends StatelessWidget {
         onPressed: () => {
           //slide up something where we can add a new task
           showModalBottomSheet(
-              context: context, builder: (context) => AddTaskScreen())
+            context: context,
+            builder: (context) => AddTaskScreen(
+              (newTaskTitle) {
+                setState(() {
+                  tasks.add(Task(name: newTaskTitle, isDone: false));
+                });
+
+                Navigator.pop(context);
+              },
+            ),
+          ),
         },
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(Icons.add),
@@ -58,7 +76,7 @@ class TasksScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '12 tasks',
+                  tasks.length.toString(),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -77,7 +95,7 @@ class TasksScreen extends StatelessWidget {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(),
+              child: TasksList(tasks),
             ),
           ),
         ],
